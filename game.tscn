@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0wu6xq3xt22k"]
+[gd_scene load_steps=6 format=3 uid="uid://b0wu6xq3xt22k"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_6otix"]
 [ext_resource type="Script" path="res://food_spawner.gd" id="2_iw2c0"]
+[ext_resource type="Script" path="res://obstacle_spawner.gd" id="3_npm77"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_n7lc8"]
 radius = 50.0
@@ -24,9 +25,14 @@ self_modulate = Color(0.109884, 0.556307, 0.870001, 1)
 mesh = SubResource("SphereMesh_n7lc8")
 
 [node name="Area2D" type="Area2D" parent="Player/MeshInstance2D"]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/MeshInstance2D/Area2D"]
 shape = SubResource("CircleShape2D_puk7b")
+one_way_collision_margin = 0.0
 
 [node name="FoodSpawner" type="Node2D" parent="."]
 script = ExtResource("2_iw2c0")
+
+[node name="ObstacleSpawner" type="Node2D" parent="."]
+script = ExtResource("3_npm77")

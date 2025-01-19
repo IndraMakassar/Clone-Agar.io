@@ -1,7 +1,7 @@
 extends Node2D
 
 var size = 1.0
-var zoom = 1.0
+var zoom = 0.1
 
 func _process(delta):
 	$MeshInstance2D.scale.x = lerp($MeshInstance2D.scale.x, size, 0.1)
@@ -22,4 +22,12 @@ func _process(delta):
 			if size > food.size:
 				food.queue_free()
 				size += 0.2
-				zoom += 0.04
+				zoom -= 0.04
+	
+	var obstacles = get_tree().get_nodes_in_group("Obstacle")
+	for obstacle in obstacles:
+		if $MeshInstance2D/Area2D.overlaps_area(obstacle):
+			if size > 1:
+				obstacle.queue_free()
+				size -= obstacle.size/2
+				zoom += 0.08

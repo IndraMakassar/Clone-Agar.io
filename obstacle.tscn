@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://vo0npiv5fvf2"]
+
+[ext_resource type="Script" path="res://obstacle.gd" id="1_omca8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkfps"]
+size = Vector2(122, 102)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_ke1gj"]
+radius = 60.895
+section_length = 20.477
+
+[node name="Obstacle" type="Area2D" groups=["Obstacle"]]
+script = ExtResource("1_omca8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_vkfps")
+one_way_collision_margin = 0.0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("TubeTrailMesh_ke1gj")
