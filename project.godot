@@ -14,3 +14,7 @@ config/name="Agar.io lilke"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[global_group]
+
+Player=""

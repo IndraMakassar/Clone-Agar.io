@@ -1,25 +1,31 @@
 extends Node2D
 
 var obstacle = preload("res://obstacle.tscn")
-var grid_spacing = 100
-var grid_size_x = 40
-var grid_size_y = 40
-var grid_positions = []
+var spawn_positions = []
 
 func _ready():
-	initialize_grid_positions()
-	for i in range(100):
-		if grid_positions.size() > 0:
-			var random_index = randi() % grid_positions.size()
-			var position = grid_positions.pop_back()
-			var o = obstacle.instantiate()
-			add_child(o)
-			o.position = position
-		else:
-			print("No more valid positions for obstacles.")
-			break
+	for i in 100:
+		var f = obstacle.instantiate()
+		var position = get_random_non_overlapping_position()
+		if position != null:
+			add_child(f)
+			f.position = position
+			spawn_positions.append(position)
+		else: 
+			print("could not find position")
 
-func initialize_grid_positions():
-	for x in range(-grid_size_x, grid_size_x):
-		for y in range(-grid_size_y, grid_size_y):
-			grid_positions.append(Vector2(x * grid_spacing, y * grid_spacing))
+func get_random_non_overlapping_position() -> Vector2:
+	var max_attempts = 10
+	var radius = 50
+	for attempt in range(max_attempts):
+		randomize()
+		var pos = Vector2(randi_range(-2000, 2000), randi_range(-2000, 2000))
+		if is_position_valid(pos, radius):
+			return pos
+	return Vector2.ZERO
+
+func is_position_valid(pos: Vector2, radius: float) -> bool:
+	for existing_pos in spawn_positions:
+		if pos.distance_to(existing_pos) < radius:
+			return false
+	return true
